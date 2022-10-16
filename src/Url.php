@@ -12,7 +12,7 @@ use League\Uri\Http;
 use League\Uri\UriInfo;
 use League\Uri\UriResolver;
 
-final class Url
+final class Url implements \Stringable
 {
     private Http $http;
 
@@ -68,8 +68,9 @@ final class Url
 
     public function getAbsoluteUri(): string
     {
-        // return substr($this->get(), \strlen($this->getOrigin()));
-        return substr($this->http->withFragment('')->__toString(), \strlen($this->getOrigin()));
+        $absolute = substr($this->http->withFragment('')->__toString(), \strlen($this->getOrigin()));
+
+        return '' === $absolute ? '/' : $absolute;
     }
 
     public function get(): string
